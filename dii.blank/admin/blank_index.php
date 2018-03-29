@@ -1,8 +1,6 @@
-<?php
+<?require_once $_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_admin_before.php';
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_admin_before.php';
-
-// @todo: Здесь - какой-то системный код, читающие данные и всё такое
+//Системный код до вывода (логика)
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_admin_after.php';
 

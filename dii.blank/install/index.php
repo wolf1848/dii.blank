@@ -10,17 +10,16 @@ Loc::loadMessages(__FILE__);
 
 // (dii_blank) класс должен формироваться из кода партнера и id модуля
 // (в id модуля запрещен символ подчеркивания "_" но в названии класса нельзя использовать точку по этому заменяем точку на подчеркивание)
-class dii_blank extends CModule
-{
-    public function __construct()
-    {
+class dii_blank extends CModule{
+
+    public function __construct(){
+
         //Свойства определяемые в конструкторе обязательны
         $arModuleVersion = array();
 
         require_once( __DIR__ . '/version.php');
 
-        if (is_array($arModuleVersion) && array_key_exists('VERSION', $arModuleVersion))
-        {
+        if (is_array($arModuleVersion) && array_key_exists('VERSION', $arModuleVersion)){
             $this->MODULE_VERSION = $arModuleVersion['VERSION'];
             $this->MODULE_VERSION_DATE = $arModuleVersion['VERSION_DATE'];
         }
@@ -34,8 +33,8 @@ class dii_blank extends CModule
     }
 
     //Обязательный метод для установки модуля
-    public function doInstall()
-    {
+    public function doInstall(){
+
         //В методе удаления модуля все то же самоетолько для удаления
 
         //Регистрация модуля в системе
@@ -51,8 +50,7 @@ class dii_blank extends CModule
         $eventManager->registerEventHandler("main","OnBuildGlobalMenu",$this->MODULE_ID,"\\Dii\\Blank\\System","addMenu");
     }
     //Обязательный метод для удаления модуля
-    public function doUninstall()
-    {
+    public function doUninstall(){
         $eventManager = \Bitrix\Main\EventManager::getInstance();
         $eventManager->unRegisterEventHandler("main","OnBuildGlobalMenu",$this->MODULE_ID,"\\Dii\\Blank\\System","addMenu");
         $this->uninstallDB();
@@ -60,31 +58,27 @@ class dii_blank extends CModule
         ModuleManager::unRegisterModule($this->MODULE_ID);
     }
     //Создание нужных таблиц сущьность описана в папке lib
-    public function installDB()
-    {
-        if (Loader::includeModule($this->MODULE_ID))
-        {
+    public function installDB(){
+        if (Loader::includeModule($this->MODULE_ID)){
             DefaultTable::getEntity()->createDbTable();
         }
     }
 
-    public function uninstallDB()
-    {
-        if (Loader::includeModule($this->MODULE_ID))
-        {
+    public function uninstallDB(){
+
+        if (Loader::includeModule($this->MODULE_ID)){
+
             $connection = Application::getInstance()->getConnection();
             $connection->dropTable(DefaultTable::getTableName());
         }
     }
 
-    //Установка файлов (В данном случае скрипты для админки следите за путями установка происходит из директории /local/)
+    //Установка файлов (В данном случае скрипты для админки (могут быть компоненты и прочее), следите за путями установка происходит из директории /local/)
     public function InstallFiles(){
         CopyDirFiles($_SERVER["DOCUMENT_ROOT"]."/local/modules/dii.blank/install/admin", $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin", true, true);
     }
 
-    public function UnInstallFiles()
-    {
+    public function UnInstallFiles(){
         DeleteDirFiles($_SERVER["DOCUMENT_ROOT"] . "/local/modules/dii.blank/install/admin", $_SERVER["DOCUMENT_ROOT"] . "/bitrix/admin");
     }
-
 }

@@ -1,7 +1,7 @@
 <?
 //Файл дефолтных настроек модуля
 // $(dii_blank) чать переменной должна соответствовать коду партнера и ид модуля
-$dii_blank_default_option = array(
+$dii_blank_default_option = [
     'param1' => '500',
     'param2' => 'params',
-);
+];
